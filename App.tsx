@@ -2,36 +2,49 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import Card from './src/components/Card';
 import users from './assets/data/users';
 import Animated, {
+    useAnimatedGestureHandler,
     useAnimatedStyle,
     useSharedValue,
     withSpring,
 } from 'react-native-reanimated';
-import { GestureDetector, Gesture, GestureHandlerRootView } from 'react-native-gesture-handler';
+import {
+    GestureHandlerRootView,
+    PanGestureHandler,
+} from 'react-native-gesture-handler';
 
 export default function App() {
-    const values = useSharedValue(1);
+    const translateX = useSharedValue(0);
 
     const cardStyle = useAnimatedStyle(() => ({
-        opacity: values.value,
+        transform: [
+            {
+                translateX: translateX.value,
+            },
+        ],
     }));
 
+    const gestureHandler = useAnimatedGestureHandler({
+        onStart: (_, context) => {
+            // console.log('touch start');
+            context.startX = translateX.value;
+        },
+        onActive: (e, context) => {
+            translateX.value = context.startX + e.translationX;
+            // console.log('touch x:', e.translationX);
+        },
+        onEnd: () => console.log('touch end'),
+    });
+
     return (
-        <GestureHandlerRootView style={styles.container}>
-            <View style={styles.container}>
-                {/* {users.map((user) => ( */}
-                <Animated.View style={[styles.animatedCard, cardStyle]}>
-                    <Card user={users[0]} />
-                </Animated.View>
-                <Pressable
-                    onPress={() =>
-                        (values.value = withSpring(Math.random()))
-                    }
-                >
-                    <Text>update value</Text>
-                </Pressable>
-                {/* ))} */}
-            </View>
-        </GestureHandlerRootView>
+        <View style={styles.container}>
+            <GestureHandlerRootView>
+                <PanGestureHandler onGestureEvent={gestureHandler}>
+                    <Animated.View style={[styles.animatedCard, cardStyle]}>
+                        <Card user={users[0]} />
+                    </Animated.View>
+                </PanGestureHandler>
+            </GestureHandlerRootView>
+        </View>
     );
 }
 
