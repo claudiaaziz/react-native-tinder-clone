@@ -17,15 +17,11 @@ export default function Card({ user }) {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
     card: {
         width: '100%',
         height: '100%',
         borderRadius: 10,
+        // backgroundColor: 'white',
 
         // shadow
         // ios
@@ -41,14 +37,14 @@ const styles = StyleSheet.create({
         elevation: 4,
     },
     image: {
-        width: '100%',
-        height: '100%',
+        marginTop: 50,
+        width: 350,
+        height: 700,
         borderRadius: 10,
         overflow: 'hidden',
         justifyContent: 'flex-end',
-        gap: 3,
+        alignSelf: 'center', // Center the image horizontally
     },
-    // cardText: {},
     name: {
         color: 'white',
         fontSize: 32,
