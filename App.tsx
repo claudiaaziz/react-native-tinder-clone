@@ -1,36 +1,50 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, useWindowDimensions, View } from 'react-native';
 import Card from './src/components/Card';
 import users from './assets/data/users';
 import Animated, {
+    interpolate,
     useAnimatedGestureHandler,
     useAnimatedStyle,
+    useDerivedValue,
     useSharedValue,
-    withSpring,
 } from 'react-native-reanimated';
 import {
     GestureHandlerRootView,
     PanGestureHandler,
 } from 'react-native-gesture-handler';
 
+const ROTATION = 60;
+
 export default function App() {
+    const { width } = useWindowDimensions();
+
+    const offScreenTranslateX = 2 * width;
+
     const translateX = useSharedValue(0);
+    const rotate = useDerivedValue(
+        () =>
+            interpolate(
+                translateX.value,
+                [0, offScreenTranslateX],
+                [0, ROTATION]
+            ) + 'deg'
+    );
 
     const cardStyle = useAnimatedStyle(() => ({
         transform: [
             {
                 translateX: translateX.value,
             },
+            {
+                rotate: rotate.value,
+            },
         ],
     }));
 
     const gestureHandler = useAnimatedGestureHandler({
-        onStart: (_, context) => {
-            // console.log('touch start');
-            context.startX = translateX.value;
-        },
+        onStart: (_, context) => (context.startX = translateX.value),
         onActive: (e, context) => {
             translateX.value = context.startX + e.translationX;
-            // console.log('touch x:', e.translationX);
         },
         onEnd: () => console.log('touch end'),
     });
