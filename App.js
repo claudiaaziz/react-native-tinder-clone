@@ -15,6 +15,8 @@ import {
     PanGestureHandler,
 } from 'react-native-gesture-handler';
 import { useEffect, useState } from 'react';
+import Like from './assets/images/LIKE.png';
+import Nope from './assets/images/nope.png';
 
 const ROTATION = 60;
 const SWIPE_VELOCITY = 800;
@@ -93,6 +95,22 @@ export default function App() {
         ),
     }));
 
+    // choice animations
+    const likeStyle = useAnimatedStyle(() => ({
+        opacity: interpolate(
+            translateX.value,
+            [0, offScreenTranslateX / 5],
+            [0, 1]
+        ),
+    }));
+    const nopeStyle = useAnimatedStyle(() => ({
+        opacity: interpolate(
+            translateX.value,
+            [0, -offScreenTranslateX / 5],
+            [0, 1]
+        ),
+    }));
+
     return (
         <View style={styles.container}>
             {nextUser && (
@@ -107,6 +125,20 @@ export default function App() {
                 <GestureHandlerRootView>
                     <PanGestureHandler onGestureEvent={gestureHandler}>
                         <Animated.View style={[styles.animatedCard, cardStyle]}>
+                            <Animated.Image
+                                source={Like}
+                                style={[styles.choice, { left: 10 }, likeStyle]}
+                                resizeMode="contain"
+                            />
+                            <Animated.Image
+                                source={Nope}
+                                style={[
+                                    styles.choice,
+                                    { right: 10 },
+                                    nopeStyle,
+                                ]}
+                                resizeMode="contain"
+                            />
                             <Card user={currentUser} />
                         </Animated.View>
                     </PanGestureHandler>
@@ -124,7 +156,7 @@ const styles = StyleSheet.create({
     },
     animatedCard: {
         width: '100%',
-        flex: 1,
+        height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -132,5 +164,14 @@ const styles = StyleSheet.create({
         ...StyleSheet.absoluteFillObject,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    choice: {
+        width: 150,
+        height: 150,
+        position: 'absolute',
+        top: 10,
+        zIndex: 1,
+
+        elevation: 1,
     },
 });
