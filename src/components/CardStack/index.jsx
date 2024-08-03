@@ -19,7 +19,12 @@ import Nope from '../../../assets/images/nope.png';
 const ROTATION = 60;
 const SWIPE_VELOCITY = 800;
 
-export default function CardStack({ data, renderItem }) {
+export default function CardStack({
+    data,
+    renderItem,
+    onRightSwipe,
+    onLeftSwipe,
+}) {
     const [currentIdx, setCurrentIdx] = useState(0);
     const [nextIdx, setNextIdx] = useState(currentIdx + 1);
     const currentProfile = data[currentIdx];
@@ -76,6 +81,9 @@ export default function CardStack({ data, renderItem }) {
                 {},
                 () => runOnJS(setCurrentIdx)(currentIdx + 1)
             );
+
+            const onSwipe = e.velocityX > 0 ? onRightSwipe : onLeftSwipe;
+            onSwipe && runOnJS(onSwipe)(currentProfile);
         },
     });
 
