@@ -21,28 +21,28 @@ export default function MatchesScreen() {
 }
 
 const styles = StyleSheet.create({
-    // temp
     container: {
         flex: 1,
+        width: '100%',
     },
     title: {
         fontWeight: 'bold',
         fontSize: 24,
-        color: '#F63A6E',
-        padding: 20,
+        color: '#fe3c72',
+        paddingHorizontal: 20,
     },
     usersContainer: {
         flexDirection: 'row',
-        marginHorizontal: 15
+        margin: 15,
     },
     user: {
         width: 100,
         height: 100,
         margin: 5,
         borderWidth: 2,
-        borderColor: '#F63A6E',
+        borderColor: '#fe3c72',
         borderRadius: 50,
-        padding: 2
+        padding: 2,
     },
     image: {
         width: '100%',

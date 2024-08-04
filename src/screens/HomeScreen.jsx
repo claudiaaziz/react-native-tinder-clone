@@ -8,11 +8,11 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function HomeScreen() {
     const onLeftSwipe = (currentProfile) => {
-        console.warn('left swipe:', currentProfile.name);
+        console.log('left swipe:', currentProfile.name);
     };
 
     const onRightSwipe = (currentProfile) => {
-        console.warn('right swipe:', currentProfile.name);
+        console.log('right swipe:', currentProfile.name);
     };
 
     return (

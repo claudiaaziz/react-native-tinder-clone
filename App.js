@@ -1,13 +1,21 @@
 import { SafeAreaView, StyleSheet } from 'react-native';
 import HomeScreen from './src/screens/HomeScreen';
 import Navbar from './src/components/Navbar';
+import MatchesScreen from './src/screens/MatchesScreen';
+import { useState } from 'react';
 
 export default function App() {
+    // temp
+    const [activeScreen, setActiveScreen] = useState('home');
+
     return (
         <SafeAreaView style={styles.root}>
-            <Navbar />
+            <Navbar
+                activeScreen={activeScreen}
+                setActiveScreen={setActiveScreen}
+            />
 
-            <HomeScreen />
+            {activeScreen === 'home' ? <HomeScreen /> : <MatchesScreen />}
         </SafeAreaView>
     );
 }
