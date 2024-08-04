@@ -3,6 +3,11 @@ import HomeScreen from './src/screens/HomeScreen';
 import Navbar from './src/components/Navbar';
 import MatchesScreen from './src/screens/MatchesScreen';
 import { useState } from 'react';
+import { Amplify } from 'aws-amplify';
+// import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react-native';
+// import outputs from './amplify_outputs.json';
+
+Amplify.configure(outputs);
 
 export default function App() {
     // temp
