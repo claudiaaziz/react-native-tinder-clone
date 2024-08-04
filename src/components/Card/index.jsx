@@ -9,8 +9,10 @@ export default function Card({ user }) {
                 }}
                 style={styles.image}
             >
-                <Text style={styles.name}>{user.name}</Text>
-                <Text style={styles.bio}>{user.bio}</Text>
+                <View style={styles.textContainer}>
+                    <Text style={styles.name}>{user.name}</Text>
+                    <Text style={styles.bio}>{user.bio}</Text>
+                </View>
             </ImageBackground>
         </View>
     );
@@ -37,23 +39,24 @@ const styles = StyleSheet.create({
         elevation: 4,
     },
     image: {
-        marginTop: 50,
+        // marginTop: 42,
         width: 350,
-        height: 700,
+        height: 600,
         borderRadius: 10,
         overflow: 'hidden',
         justifyContent: 'flex-end',
-        alignSelf: 'center', // Center the image horizontally
+    },
+    textContainer: {
+        padding: 20,
     },
     name: {
         color: 'white',
         fontSize: 32,
-        padding: 20,
+        marginBottom: 10,
     },
     bio: {
         color: 'white',
         fontSize: 16,
         lineHeight: 24,
-        padding: 20,
     },
 });
